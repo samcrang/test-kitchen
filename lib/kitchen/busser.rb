@@ -100,8 +100,8 @@ module Kitchen
 
     private
 
-    DEFAULT_RUBY_BINPATH = "/opt/chef/embedded/bin".freeze
-    DEFAULT_BUSSER_ROOT = "/opt/busser".freeze
+    DEFAULT_RUBY_BINPATH = "/usr/bin".freeze
+    DEFAULT_BUSSER_ROOT = "/usr/local".freeze
     DEFAULT_TEST_ROOT = File.join(Dir.pwd, "test/integration").freeze
 
     attr_reader :test_root

@@ -90,6 +90,13 @@ module Kitchen
       end
     end
 
+    module Cfenginelike
+
+      def bundle_list
+        Array(data[:bundle_list])
+      end
+    end
+
     private
 
     attr_reader :data

@@ -38,7 +38,7 @@ module Kitchen
     DEFAULT_DRIVER_PLUGIN = "dummy".freeze
 
     # Default provisioner to use
-    DEFAULT_PROVISIONER = "chef_solo".freeze
+    DEFAULT_PROVISIONER = "cfengine".freeze
 
     # Creates a new configuration.
     #
@@ -143,6 +143,7 @@ module Kitchen
       case provisioner.to_s.downcase
       when /^chef_/ then suite.dup.extend(Suite::Cheflike)
       when /^puppet_/ then suite.dup.extend(Suite::Puppetlike)
+      when /^cfengine/ then suite.dup.extend(Suite::Cfenginelike)
       else suite.dup
       end
     end
@@ -158,6 +159,7 @@ module Kitchen
       case provisioner.to_s.downcase
       when /^chef_/ then instance.extend(Instance::Cheflike)
       when /^puppet_/ then instance.extend(Instance::Puppetlike)
+      when /^cfengine/ then instance.extend(Instance::Cfenginelike)
       else instance
       end
     end

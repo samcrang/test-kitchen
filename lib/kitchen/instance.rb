@@ -213,6 +213,13 @@ module Kitchen
       end
     end
 
+    module Cfenginelike
+
+      def bundle_list
+        Array(suite.bundle_list)
+      end
+    end
+
     private
 
     def validate_options(opts)
