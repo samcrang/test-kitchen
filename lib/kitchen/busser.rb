@@ -101,7 +101,7 @@ module Kitchen
     private
 
     DEFAULT_RUBY_BINPATH = "/usr/bin".freeze
-    DEFAULT_BUSSER_ROOT = "/usr/local".freeze
+    DEFAULT_BUSSER_ROOT = "/usr".freeze
     DEFAULT_TEST_ROOT = File.join(Dir.pwd, "test/integration").freeze
 
     attr_reader :test_root
