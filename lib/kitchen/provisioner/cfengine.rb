@@ -51,11 +51,15 @@ module Kitchen
       def create_sandbox
         @tmpdir = Dir.mktmpdir("#{instance.name}-sandbox-")
         File.chmod(0755, @tmpdir)
+		cfengine_tmp = File.join(tmpdir, "cfengine")
 
-        tmp_promises_dir = File.join(tmpdir, "cfengine")
-        FileUtils.mkdir_p(tmp_promises_dir)
-        FileUtils.cp_r(Dir.glob("cfengine/*"), tmp_promises_dir)
-        tmpdir
+        instance.bundle_list.each { |cf_file|
+			sandbox_path = File.join(cfengine_tmp, cf_file)
+			FileUtils.mkdir_p(File.dirname(sandbox_path))
+			FileUtils.cp(cf_file, sandbox_path)
+		}
+
+		cfengine_tmp
       end
 
       def init_command ; end
