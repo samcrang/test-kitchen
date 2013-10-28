@@ -70,7 +70,7 @@ module Kitchen
       def prepare_command ; end
 
       def run_command
-        instance.bundle_list.map { |x| "sudo /var/cfengine/bin/cf-agent -KI -f #{home_path}/" + x }.join(" && ")
+        instance.bundle_list.map { |cf_file| "sudo /var/cfengine/bin/cf-agent -KI -f #{home_path}/" + cf_file }.join(" && ")
       end
 
       def home_path
