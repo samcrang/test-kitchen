@@ -53,11 +53,14 @@ module Kitchen
         File.chmod(0755, @tmpdir)
 		cfengine_tmp = File.join(tmpdir, "cfengine")
 
-        instance.bundle_list.each { |cf_file|
-			sandbox_path = File.join(cfengine_tmp, cf_file)
-			FileUtils.mkdir_p(File.dirname(sandbox_path))
-			FileUtils.cp(cf_file, sandbox_path)
-		}
+		instance.bundle_list
+			.map { |cf_file| File.dirname(cf_file) }
+			.uniq
+			.each { |source_path|
+				sandbox_path = File.join(cfengine_tmp, source_path)
+				FileUtils.mkdir_p(sandbox_path)
+				FileUtils.cp_r(Dir.glob("#{source_path}/*"), sandbox_path)
+			}
 
 		cfengine_tmp
       end
