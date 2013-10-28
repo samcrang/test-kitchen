@@ -51,11 +51,18 @@ module Kitchen
       def create_sandbox
         @tmpdir = Dir.mktmpdir("#{instance.name}-sandbox-")
         File.chmod(0755, @tmpdir)
+        cfengine_tmp = File.join(tmpdir, "cfengine")
 
-        tmp_promises_dir = File.join(tmpdir, "cfengine")
-        FileUtils.mkdir_p(tmp_promises_dir)
-        FileUtils.cp_r(Dir.glob("cfengine/*"), tmp_promises_dir)
-        tmpdir
+        instance.bundle_list
+          .map { |cf_file| File.dirname(cf_file) }
+          .uniq
+          .each { |source_path|
+            sandbox_path = File.join(cfengine_tmp, source_path)
+            FileUtils.mkdir_p(sandbox_path)
+            FileUtils.cp_r(Dir.glob("#{source_path}/*"), sandbox_path)
+          }
+
+        cfengine_tmp
       end
 
       def init_command ; end
@@ -63,7 +70,7 @@ module Kitchen
       def prepare_command ; end
 
       def run_command
-        instance.bundle_list.map { |x| "sudo /var/cfengine/bin/cf-agent -KI -f #{home_path}/" + x }.join(" && ")
+        instance.bundle_list.map { |cf_file| "sudo /var/cfengine/bin/cf-agent -KI -f #{home_path}/" + cf_file }.join(" && ")
       end
 
       def home_path
