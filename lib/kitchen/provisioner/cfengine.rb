@@ -32,19 +32,7 @@ module Kitchen
         @logger = instance.logger
       end
 
-      def install_command
-        <<-INSTALL.gsub(/^ {10}/, '')
-          sudo bash -c '
-            echo "deb http://cfengine.com/pub/apt $(lsb_release -cs) main" > /etc/apt/sources.list.d/cfengine-community.list
-            wget --output-document=/tmp/cfengine-gpg.key http://cfengine.com/pub/gpg.key
-            sudo apt-key add /tmp/cfengine-gpg.key
-            rm /tmp/cfengine-gpg.key
-            apt-get update
-            apt-get -y install cfengine-community
-            /var/cfengine/bin/cf-key
-            /var/cfengine/bin/cf-agent --bootstrap `hostname -I`'
-        INSTALL
-      end
+      def install_command ; end
 
       def cleanup_sandbox ; end
 
